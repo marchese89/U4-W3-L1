@@ -8,7 +8,7 @@ WHERE clienti.nome = 'Mario'
 -- Nome e cognome dei clienti nati nel 1982
 SELECT nome,cognome
 FROM clienti
-WHERE anno_di_nascita = '1982'
+WHERE anno_di_nascita = 1982
 
 -- query 3
 -- numero delle fatture con iva al 20%
@@ -22,6 +22,12 @@ SELECT *
 FROM prodotti
 WHERE (data_attivazione BETWEEN '2017-01-01' AND '2017-12-31') AND (in_produzione = TRUE OR in_commercio = TRUE)
 
+-- query 4 alternativa
+
+SELECT *
+FROM prodotti
+WHERE EXTRACT(YEAR FROM data_attivazione) = 2017 AND (in_produzione = TRUE OR in_commercio = TRUE)
+
 -- query 5
 -- estrarre le fatture con importo inferiore a 1000 e i dati dei clienti ad esse collegate
 SELECT *
@@ -29,7 +35,7 @@ FROM fatture JOIN clienti ON fatture.id_cliente = clienti.numero_cliente
 WHERE fatture.importo < 1000
 
 -- query 6
--- riportare l'elenco delle fatture (numero,importo,iva e data) con in aggiunta il nomer del fornitore
+-- riportare l'elenco delle fatture (numero,importo,iva e data) con in aggiunta il nome del fornitore
 
 SELECT fatture.numero_fattura, fatture.importo, fatture.iva, fatture.data_fattura, fornitori.denominazione
 FROM fatture JOIN fornitori ON fatture.numero_fornitore = fornitori.numero_fornitore
