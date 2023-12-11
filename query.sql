@@ -67,6 +67,10 @@ GROUP BY clienti.regione_residenza
 -- query 11
 -- estrarre il numero dei clienti nati nel 1980 che hanno almeno una fattura superiore a 50 euro
 
-SELECT COUNT(clienti.numero_cliente) AS num_clienti
-FROM clienti JOIN fatture ON clienti.numero_cliente = fatture.id_cliente
-WHERE clienti.anno_di_nascita = 1980 AND fatture.importo > 50
+SELECT COUNT(c.numero_cliente) AS num_clienti
+FROM clienti c
+WHERE c.anno_di_nascita = 1980 AND 
+EXISTS(
+	SELECT * FROM fatture 
+	WHERE c.numero_cliente = fatture.id_cliente AND fatture.importo > 50
+) 
